@@ -193,12 +193,18 @@ class VirtDriverLoaderTestCase(_FakeDriverBackendTestCase, test.TestCase):
 
 
 class _VirtDriverTestCase(_FakeDriverBackendTestCase):
+
+    #NOTE(bcwaldon): Override this if the driver class being tested needs
+    # some arbitrary additional arguments at instantiation.
+    driver_args = []
+
     def setUp(self):
         super(_VirtDriverTestCase, self).setUp()
 
         self.flags(instances_path=self.useFixture(fixtures.TempDir()).path)
         self.connection = importutils.import_object(self.driver_module,
-                                                    fake.FakeVirtAPI())
+                                                    fake.FakeVirtAPI(),
+                                                    *self.driver_args)
         self.ctxt = test_utils.get_test_admin_context()
         self.image_service = fake_image.FakeImageService()
 
