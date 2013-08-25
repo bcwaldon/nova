@@ -194,6 +194,10 @@ class VirtDriverLoaderTestCase(_FakeDriverBackendTestCase, test.TestCase):
 
 class _VirtDriverTestCase(_FakeDriverBackendTestCase):
 
+    #NOTE(bcwaldon): This must be set to the dot-separated path of the
+    # driver class to be tested (i.e. 'nova.virt.libvirt.LibvirtDriver')
+    driver_module = None
+
     #NOTE(bcwaldon): Override this if the driver class being tested needs
     # some arbitrary additional arguments at instantiation.
     driver_args = []
